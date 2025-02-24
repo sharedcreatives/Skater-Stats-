@@ -1,0 +1,17 @@
+stages:
+  - test
+  - deploy
+
+test-players-service:
+  stage: test
+  script:
+    - cd players-service
+    - composer install
+    - php artisan test
+
+deploy-teams-service:
+  stage: deploy
+  script:
+    - ssh user@server "cd /var/www/teams-service && git pull"
+  only:
+    - master
